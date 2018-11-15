@@ -1,17 +1,15 @@
-<<<<<<< HEAD
-from flask import Flask
+from flask import Flask, request
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
-    return '<h1>Hello World!</h1>'
-=======
-from flask import Flask
-app = Flask(__name__)
+    # 瀏覽器資訊
+    user_agent = request.headers.get('User-Agent')
+    return '<p>Your browser id {}</p>'.format(user_agent)
+    # return '<h1>Hello World!</h1>'
 
 
-@app.route('/')
-def index():
-    return '<h1>Hello World!</h1>'
->>>>>>> c728524e823ab2b3c5dee9b3a05441e3a66ff8b7
+@app.route('/user/<name>')     # 動態路由
+def user(name):
+    return '<h1>Hello, {}!</h1>'.format(name)
