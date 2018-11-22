@@ -1,0 +1,27 @@
+<!-- 自定義頁面 -->
+
+{% extends "base.html" %}
+{% block page_content %}
+<div class="page-container page-container-responsive">
+    <div class="row row-space-top-8 row-space-8 row-table">
+        <div class="col-5 col-middle">
+            <h2 class="text-jumbo text-ginormous">Oops!</h2>
+            <h2>We can't seem to find the page you're looking for. </h2>
+            <h6> Error Code: 404</h6>
+            <ul class="list-unstyled">
+                <li>Here are some helpful links instead:</li>
+                <li><a href="/"> Home </a></li>
+                <li><a href="/search"> Search </a></li>
+                <li><a href="/help"> Help </a></li>
+                <li><a href="/help/getting-started/how-to-travel">Traveling on Airbnb</a></li>
+                <li><a href="/info/why_host"> Hosting on Airbnb</a></li>
+                <li><a href="/trust">Trust &amp; Safety </a></li>
+                <li><a href="/sitemaps"> Sitemap </a></li>
+            </ul>
+        </div>
+        <div class="col-5 col-middle text-center">
+            <img src="{{url_for('static', filename='404-Airbnb.gif')}}" width="313" height="428" alt="Girl has dropped her ice cream.">
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,21 +1,46 @@
-<!DOCTYPE html>
-<html>
+<!-- 基礎模板 建立 -->
+<!-- 繼承flask_bootstrap中的bootstrap/base.html基礎模板 -->
+{% extends bootstrap/base.html %}
 
-<head>
-    {% block head %}
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>
-        {% block title %} {% endblock %} - My Application
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% endblock %}
+<!-- <head>標籤中的內容 -->
+{% block head %}
+<!-- 
+    保留自帶基模板的塊中原有的內容，那麼需要使用Jinja2提供的super()函式 , icon的定義的妙處：這裡定義的ico會從專案裡”static/”靜態資料夾中進行獲取，確保了ico的可訪問性。裡面具體的url_for()函式屬於靜態路由的一部分。 
+    Flask中有一個static路由，預設的路徑就是static/目錄下，呼叫就是通過url_for()函式。
+-->
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename = 'favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename = 'favicon.ico') }}" type="image/x-icon">
+{% endblock %}
 
-</head>
 
-<body>
-    {% block body %}
-    {% end block %}
-</body>
+{% block title %} Flasky {% endblock %}
+{% block navbar %}
 
-</html>
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only"> Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Flasky</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li> <a href="/">Home</a></li>
+                <li> <a href="#">Contacts</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- page_content就是我們自定義的塊標籤，我們在其他頁面中就可以使用了。 -->
+{% block page_content%}
+{% endblock %}
+
+{% endblock %}

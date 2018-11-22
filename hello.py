@@ -1,8 +1,12 @@
 from flask import Flask, request, render_template
 from flask import make_response  # 回傳一個回應物件
 from flask import abort          # 處理錯誤狀態
+# Flash_boostrap 包含所有Bootstrap檔案 & 基礎結構模板
+from flask.extend.bootstrap import Bootstrap
 
 app = Flask(__name__)
+# app 利用 Jinja2 的模板繼承並擴充此套件
+bootstrap = Bootstrap(app)
 
 
 @app.route('/')
@@ -17,14 +21,15 @@ def index():
 
 
 @app.route('/user/<name>')     # 動態路由
-def get_user(name):
-    user = load_user(name)
-    if not user:
-        abort(404)
+def user(name):
     return render_template('user.html', name=name)
 
 
-def load_user(name):
-    # return '<h1>Hello, {}!</h1>'.format(name)
-    # return render_template('user.html', name=name)
-    return name
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
