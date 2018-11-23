@@ -40,7 +40,13 @@
 
 {% block content %}
 <!-- page_content就是我們自定義的塊標籤，我們在其他頁面中就可以使用了。 -->
-{% block page_content%}
+<div class="container">
+    {% block page_content%}{% endblock %}
+</div>
 {% endblock %}
 
+{% block script %}
+{{ super() }}
+<!-- 匯入 Moment.js -->
+{{ moment.include_moment() }}
 {% endblock %}

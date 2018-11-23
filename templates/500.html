@@ -1,0 +1,13 @@
+<!-- 自訂500碼 錯誤網頁 -->
+{% extends "base.html" %}
+{% block title %}
+Flasky - Internal Server Error
+{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Something's wrong! </h1>
+    <p>Fortunately we are on the job, and you can just return home!</p>
+    <p><a href="{{url_for('index')}}">Back</a></p>
+</div>
+{% endblock %}
