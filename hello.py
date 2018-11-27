@@ -8,12 +8,20 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 # 時間
 from datetime import datetime
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 app = Flask(__name__)
-
 # app 利用 Jinja2 的模板繼承並擴充此套件
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+
+
+class NameForm(FlaskForm):
+    # 定義表單類別
+    name = StringField('What is your name? ', validators=[DataRequired()])
+    submit = SubmitField('Submit')
 
 
 @app.errorhandler(404)
