@@ -1,6 +1,8 @@
 <!-- 基礎模板 建立 -->
 <!-- 繼承flask_bootstrap中的bootstrap/base.html基礎模板 -->
-{% extends bootstrap/base.html %}
+{% extends "bootstrap/base.html" %}
+
+{% block title %} Flasky {% endblock %}
 
 <!-- <head>標籤中的內容 -->
 {% block head %}
@@ -9,14 +11,11 @@
     Flask中有一個static路由，預設的路徑就是static/目錄下，呼叫就是通過url_for()函式。
 -->
 {{ super() }}
-<link rel="shortcut icon" href="{{ url_for('static', filename = 'favicon.ico') }}" type="image/x-icon">
-<link rel="icon" href="{{ url_for('static', filename = 'favicon.ico') }}" type="image/x-icon">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 {% endblock %}
 
-
-{% block title %} Flasky {% endblock %}
 {% block navbar %}
-
 <div class="navbar navbar-inverse" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -31,7 +30,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li> <a href="/">Home</a></li>
-                <li> <a href="#">Contacts</a></li>
+                <li> <a href="#">Contact</a></li>
             </ul>
         </div>
     </div>
@@ -41,12 +40,14 @@
 {% block content %}
 <!-- page_content就是我們自定義的塊標籤，我們在其他頁面中就可以使用了。 -->
 <div class="container">
-    {% block page_content%}{% endblock %}
+    {% block page_content %}{% endblock %}
 </div>
 {% endblock %}
 
-{% block script %}
+<!-- 匯入Moment.js  -->
+{% block scripts %}
 {{ super() }}
-<!-- 匯入 Moment.js -->
 {{ moment.include_moment() }}
+<!-- 地區語言 設定為繁體中文 -->
+{{ moment.locale('zh-tw') }}
 {% endblock %}
