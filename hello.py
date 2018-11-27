@@ -13,6 +13,8 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
 app = Flask(__name__)
+# 設置flask-wtf
+app.config['SECRET_KEY'] = 'hard to guess string'
 # app 利用 Jinja2 的模板繼承並擴充此套件
 bootstrap = Bootstrap(app)
 moment = Moment(app)
