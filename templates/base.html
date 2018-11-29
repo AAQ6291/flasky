@@ -40,6 +40,13 @@
 {% block content %}
 <!-- page_content就是我們自定義的塊標籤，我們在其他頁面中就可以使用了。 -->
 <div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
     {% block page_content %}{% endblock %}
 </div>
 {% endblock %}

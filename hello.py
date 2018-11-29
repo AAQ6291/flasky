@@ -1,12 +1,8 @@
-from flask import Flask, request, render_template
-from flask import make_response  # 回傳一個回應物件
-
-
 # Flash_boostrap 包含所有Bootstrap檔案 & 基礎結構模板
-from flask_bootstrap import Bootstrap
 # Flask_moment 解析、驗證、操作、格式化日期
+from flask import Flask, request, render_template, session, redirect, url_for, flash
+from flask_bootstrap import Bootstrap
 from flask_moment import Moment
-# 時間
 from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
@@ -22,6 +18,7 @@ moment = Moment(app)
 
 class NameForm(FlaskForm):
     # 定義表單類別
+    # validators 驗證函式, DataRequired() 保證送出的欄位不是空值
     name = StringField('What is your name? ', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
@@ -36,16 +33,22 @@ def internal_server_error(e):
     return render_template('500.html'), 500
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     # 瀏覽器資訊
     user_agent = request.headers.get('User-Agent')
-
     # 傳送時間 current_time
     current_time = datetime.utcnow()
-
-    # 使用轉譯模板, 附帶參數傳送
-    return render_template('index.html', user_agent=user_agent, current_time=current_time)
+    # 表單定義
+    form = NameForm()
+    if form.validate_on_submit():
+        old_name = session.get('name')
+        if old_name is not None and old_name != form.name.data:
+            flash('Look like you have change your name! ')
+        session['name'] = form.name.data
+        return url_for('index')
+    # 使用轉譯模板, 附帶參數傳送(瀏覽器資訊, 表單, name變數)
+    return render_template('index.html', user_agent=user_agent, current_time=current_time, form=form, name=session.get('name'))
 
 
 @app.route('/user/<name>')     # 動態路由

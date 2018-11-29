@@ -1,14 +1,27 @@
+<!-- 
+    使用 flask-boostrap 的轉譯表單 
+    import指令 匯入bootstrap的wtf模板元素來使用 
+-->
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %} Flasky {% endblock %}
 
 {% block page_content %}
 <div class="page-header">
-    <h1>Hello World! </h1>
+    <h1>
+        Hello, {% if name %} {{ name }} {% else %} Stranger {% endif %}
+    </h1>
+    <!-- format('LLL')格式: 2018年11月27日 12:27 -->
+    <p> The local date and time is {{ moment(current_time).format('LLL') }}. </p>
+    <!-- fromNow() : 轉譯相對時間, 並隨時間推移而自動更新, refresh=True 會持續更新 -->
+    <!--
+    <p>
+        That was {{ moment(current_time).fromNow(refresh=True) }} ,
+        你目前的瀏覽器資訊: {{user_agent}}
+    </p>
+    -->
 </div>
-<p> 瀏覽器資訊: {{user_agent}} </p>
-<!-- format('LLL')格式: 2018年11月27日 12:27 -->
-<p> The local date and time is {{ moment(current_time).format('LLL') }}. </p>
-<!-- fromNow() : 轉譯相對時間, 並隨時間推移而自動更新, refresh=True 會持續更新 -->
-<p> That was {{ moment(current_time).fromNow(refresh=True) }}</p>
+<!-- wtf.quick_form()會接收一個flask-wtf的表單物件, 並使用Bootstrap來轉譯 -->
+{{ wtf.quick_form(form) }}
 {% endblock %}
