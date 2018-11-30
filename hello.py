@@ -46,7 +46,7 @@ def index():
         if old_name is not None and old_name != form.name.data:
             flash('Look like you have change your name! ')
         session['name'] = form.name.data
-        return url_for('index')
+        return redirect(url_for('index'))
     # 使用轉譯模板, 附帶參數傳送(瀏覽器資訊, 表單, name變數)
     return render_template('index.html', user_agent=user_agent, current_time=current_time, form=form, name=session.get('name'))
 
