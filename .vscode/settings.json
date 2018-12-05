@@ -1,6 +1,17 @@
 {
     "python.pythonPath": "C:\\Program Files\\Python36\\python.exe",
-    "editor.fontSize": 12,
-    "window.zoomLevel": 1,
-    "git.ignoreLimitWarning": true
+    "python.linting.pylintArgs": [
+        "--disable=R,C",
+        "--load-plugins",
+        "pylint_flask"
+    ],
+    "python.linting.pylintEnabled": false,
+    "window.zoomLevel": 0,
+    "workbench.colorTheme": "Default High Contrast",
+    "editor.formatOnPaste": true,
+    "editor.fontSize": 15,
+    "editor.fontFamily": "DejaVu Sans Mono, '微軟正黑體'",
+    "editor.fontLigatures": true,
+    "editor.smoothScrolling": true,
+    "editor.minimap.enabled": false
 }
