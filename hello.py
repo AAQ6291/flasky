@@ -1,5 +1,6 @@
 # Flash_boostrap 包含所有Bootstrap檔案 & 基礎結構模板
 # Flask_moment 解析、驗證、操作、格式化日期
+import os  # 調用操作系統命令--建立,刪除,查詢文件
 from flask import Flask, request, render_template, session, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
@@ -7,13 +8,44 @@ from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+from flask_sqlalchemy import SQLAlchemy  # set database using SQLAlchemy
+
+# get file path and file directory
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
 # 設置flask-wtf
 app.config['SECRET_KEY'] = 'hard to guess string'
+# set use less memory
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# setting database -- sqlite
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 # app 利用 Jinja2 的模板繼承並擴充此套件
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+db = SQLAlchemy(app)
+
+
+class Role(db.Model):
+    # Define Role Modle's (角色) Table
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer, primary_key=True)  # set pkey=id
+    name = db.Column(db.String(64), unique=True)
+    users = db.relationship('User', backref='role')
+
+    def __repr__(self):
+        return '<Role %r>' % self.name
+
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+
+    def __repr__(self):
+        return '<User %r>' % self.username
 
 
 class NameForm(FlaskForm):
