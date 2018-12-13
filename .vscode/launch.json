@@ -13,7 +13,7 @@
             "program": "${config:python.venvPath}\\Lib\\site-packages\\flask",
             "module": "flask",
             "env": {
-                "FLASK_APP": "${workspaceRoot}\\hello.py",
+                "FLASK_APP": "${workspaceRoot}\\main.py",
                 "FLASK_ENV": "development",
                 "FLASK_DEBUG": "1" //啟用Debug模式
             },

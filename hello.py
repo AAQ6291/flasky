@@ -43,7 +43,6 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
     # 連結到<roles>.<id>
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
@@ -59,11 +58,13 @@ class NameForm(FlaskForm):
 
 
 @app.errorhandler(404)
+# 自訂404錯誤網頁
 def page_not_found(e):
     return render_template('404.html'), 404
 
 
 @app.errorhandler(500)
+# 自訂500錯誤網頁
 def internal_server_error(e):
     return render_template('500.html'), 500
 
@@ -87,5 +88,6 @@ def index():
 
 
 @app.route('/user/<name>')     # 動態路由
+# 自訂User網頁
 def user(name):
     return render_template('user.html', name=name)
