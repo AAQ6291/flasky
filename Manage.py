@@ -1,6 +1,6 @@
 from flask_script import Manager, Server
 from main import app
-from models import Todo
+from Models import Todo, Role, User, NameForm
 # 設定你的 app
 manager = Manager(app)
 # 設定 python manage.py runserver 為啟動 server 指令
