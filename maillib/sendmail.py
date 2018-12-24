@@ -7,7 +7,7 @@ gmail_password = '----------------'  # your gmail password
 msg = MIMEText('content')
 msg['Subject'] = 'Test'
 msg['From'] = gmail_user
-msg['To'] = 'angelak.tw@gmail.com'
+msg['To'] = 'anxxxx@gmail.com'
 
 # 一般SMTP Port=25, google SMTP PORT =465
 server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
