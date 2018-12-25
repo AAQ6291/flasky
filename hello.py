@@ -1,6 +1,7 @@
 # Flash_boostrap 包含所有Bootstrap檔案 & 基礎結構模板
 # Flask_moment 解析、驗證、操作、格式化日期
 import os  # 調用操作系統命令--建立,刪除,查詢文件
+from threading import Thread
 from flask import Flask, request, render_template, session, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
@@ -10,6 +11,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy  # set database using SQLAlchemy
 from flask_migrate import Migrate
+from flask_mail import Mail, Message
 
 # get file path and file directory
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -25,11 +27,23 @@ app.config['SQLALCHEMY_DATABASE_URI'] = \
 # set use less memory
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# app mail config
+app.config['MAIL_SERVER'] = 'smtp.google.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
+app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin<Flasky@example.com>'
+app.config['FLASKY_ADMIN'] = os.environ.get('FLASKY_ADMIN')
+
+
 # app 利用 Jinja2 的模板繼承並擴充此套件
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)  # 資料庫遷移用
+mail = Mail(app)
 
 
 class Role(db.Model):
@@ -64,6 +78,22 @@ class NameForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+def send_mail(to, subject, template, **kwargs):
+    # 支援非同步email
+    msg = Message(app.config['FLASKY_MAIL_SUBJECT_PREFIX'] + subject, sender=app.config['FLASKY_MAIL_SENDER', recipients=[to]])
+    msg.body = render_template(template + '.txt', **kwargs)
+    msg.html = render_template(temple, '.html', **kwargs)
+    thr = Thread(target=send_async_email, args=[app, msg])
+    thr.start()
+    return thr
+
+
+def send_async_email(app, msg):
+    # 支援非同步email
+    with app.app_context():
+        mail.send(msg)
+
+
 @app.shell_context_processor
 # 添加shell(殼層)環境,
 def make_shell_context():
@@ -94,17 +124,22 @@ def index():
 
     if form.validate_on_submit():
         # 使用filter_by()查詢資料庫
+        # email的模板--templates/mail 資料夾
         user = User.query.filter_by(username=form.name.data,).first()
         if user is None:
             user = User(username=form.name.data)
             db.session.add(user)
             db.session.Commit()
             session['known'] = False
+            if app.config['FLASY_ADMIN']:
+                send_email(spp.config['FLAKY_ADMIN',
+                                      'New User'], 'mail/new_user', user=user)
         else:
             session['known'] = True
         session['name'] = form.name.data
         form.name.data = ' '
         return redirect(url_for('index'))
+
     # 使用轉譯模板, 附帶參數傳送(瀏覽器資訊, 表單, name變數)
     return render_template('index.html', current_time=current_time, form=form, name=session.get('name'), known=session.get('known', False))
 
