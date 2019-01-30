@@ -2,9 +2,9 @@
 
 # Flash_boostrap 包含所有Bootstrap檔案 & 基礎結構模板
 # Flask_moment 解析、驗證、操作、格式化日期
-from flask import Flask, render_template
+from flask import Flask
 from flask_bootstrap import Bootstrap
-from flask_mail import Mail, Message
+from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy  # set database using SQLAlchemy
 from config import config

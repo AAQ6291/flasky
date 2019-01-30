@@ -1,9 +1,8 @@
 # 主腳本 -- app 實例化
 import os
-from flask_migrate import Migrate
+from flask_migrate import Migrate, MigrateCommand
 from app import create_app, db
-from app.Models import User, Role
-
+from app.models import User, Role
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 migrate = Migrate(app, db)

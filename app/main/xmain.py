@@ -13,7 +13,7 @@ from flask_sqlalchemy import SQLAlchemy
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # Set Database & Create APP
-app = Flask(__name__)
+#app = Flask(__name__)
 # set use less memory
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # setting database -- sqlite
@@ -21,13 +21,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = \
     'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 
 db = SQLAlchemy(app)
-
-
-class NameForm(FlaskForm):
-    # 定義表單類別
-    # validators 驗證函式, DataRequired() 保證送出的欄位不是空值
-    name = StringField('What is your name? ', validators=[DataRequired()])
-    submit = SubmitField('Submit')
 
 
 @app.errorhandler(404)
