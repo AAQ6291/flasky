@@ -17,16 +17,6 @@
     {% else %}
     <p>Happy to see you again ! </p>
     {% endif %}
-
-    <!-- format('LLL')格式: 2018年11月27日 12:27 -->
-    <p> The local date and time is {{ moment(current_time).format('LLL') }}. </p>
-    <!-- fromNow() : 轉譯相對時間, 並隨時間推移而自動更新, refresh=True 會持續更新 -->
-    <!--
-    <p>
-        That was {{ moment(current_time).fromNow(refresh=True) }} ,
-        你目前的瀏覽器資訊: {{user_agent}}
-    </p>
-    -->
 </div>
 <!-- wtf.quick_form()會接收一個flask-wtf的表單物件, 並使用Bootstrap來轉譯 -->
 {{ wtf.quick_form(form) }}

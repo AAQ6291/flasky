@@ -8,6 +8,7 @@ from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy  # set database using SQLAlchemy
 from config import config
+from datetime import datetime
 
 # app 利用 Jinja2 的模板繼承並擴充此套件
 bootstrap = Bootstrap()
@@ -15,6 +16,8 @@ mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
 
+# 傳送時間 current_time
+current_time = datetime.utcnow()
 
 def create_app(config_name):
     # from_object : 接收 "config.py" 定義的組態類別
