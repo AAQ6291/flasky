@@ -35,4 +35,9 @@ def create_app(config_name):
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    # 註冊身分驗證藍圖
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
+    ## url_prefix：定義所有的路由都會加上"前置詞"(在此為 --> /auth), 如/login路由會註冊為/auth/login
+
     return app
