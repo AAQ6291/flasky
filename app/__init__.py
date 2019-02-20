@@ -9,6 +9,7 @@ from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy  # set database using SQLAlchemy
 from config import config
 from datetime import datetime
+from flask_login import LoginManager
 
 # app 利用 Jinja2 的模板繼承並擴充此套件
 bootstrap = Bootstrap()
@@ -18,6 +19,10 @@ db = SQLAlchemy()
 
 # 傳送時間 current_time
 current_time = datetime.utcnow()
+
+#Flask_Login 初始化
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
 
 def create_app(config_name):
     # from_object : 接收 "config.py" 定義的組態類別
@@ -30,6 +35,7 @@ def create_app(config_name):
     mail.init_app(app)
     moment.init_app(app)
     db.init_app(app)
+    login_manager.init_app(app)
 
     # 註冊藍圖
     from .main import main as main_blueprint

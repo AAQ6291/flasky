@@ -1,0 +1,17 @@
+<!-- 
+    使用 flask-boostrap 的轉譯表單 
+    import指令 匯入bootstrap的wtf模板元素來使用 
+-->
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf  %}
+
+{% block title %} Flask - Login {% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Login</h1>    
+</div>
+<div class="col-md-4">
+    {{ wtf.quick_form(form)}}
+</div>
+{% endblock %}

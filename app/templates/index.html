@@ -10,13 +10,13 @@
 {% block page_content %}
 <div class="page-header">
     <h1>
-        Hello, {% if name %} {{ name }} {% else %} Stranger {% endif %}
+        Hello, 
+        {% if current_user.is_authenticated %}
+            {{ current_user.username }}
+        {% else %}
+            Stranger
+        {% endif %} !
     </h1>
-    {% if not known %}
-    <p> Pleased to meet you ! </p>
-    {% else %}
-    <p>Happy to see you again ! </p>
-    {% endif %}
 </div>
 <!-- wtf.quick_form()會接收一個flask-wtf的表單物件, 並使用Bootstrap來轉譯 -->
 {{ wtf.quick_form(form) }}
